@@ -13,7 +13,7 @@ module Bcnd
       self.quay_token = ENV['QUAY_TOKEN']
       self.github_token = ENV['GITHUB_TOKEN']
       self.heritage_token = ENV['HERITAGE_TOKEN']
-      self.quay.repository = ENV['QUAY_REPOSITORY'] || self.repository
+      self.quay_repository = ENV['QUAY_REPOSITORY'] || self.repository
     end
 
     def load_environment
