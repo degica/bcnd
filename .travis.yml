@@ -8,6 +8,6 @@ script:
   - bundle exec rake spec
 after_success:
   - echo $PATH
-  - cp `which echo` /usr/local/bin/bcn
+  - cp `which echo` ./bin/bcn
   - bcn hello
   - bundle exec rake bcnd:deploy
