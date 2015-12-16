@@ -23,7 +23,7 @@ module Bcnd
       quay.wait_for_automated_build(repo: env.repository, git_sha: env.commit)
       image_id = quay.docker_image_id_for_tag(repo: env.repository, tag: 'latest')
       quay.put_tag(repo: env.repository, image_id: image_id, tag: env.commit)
-      bcn_deploy env
+      bcn_deploy(env.commit)
     end
 
     def deploy_production
@@ -33,13 +33,14 @@ module Bcnd
         exit 1
       end
 
-      image_id = quay.docker_image_id_for_tag(repo: env.repository, tag: comp.base_commit.sha)
+      tag = comp.base_commit.sha
+      image_id = quay.docker_image_id_for_tag(repo: env.repository, tag: tag)
       unless image_id
         puts "There is no docker image to be deployed"
         exit 1
       end
 
-      bcn_deploy env
+      bcn_deploy(tag)
     end
 
     def quay
@@ -50,8 +51,8 @@ module Bcnd
       @github ||= Octokit::Client.new(access_token: env.github_token)
     end
 
-    def bcn_deploy(env)
-      system "bcn deploy -e #{env.deploy_environment} --tag #{env.commit} --heritage-token #{env.heritage_token}"
+    def bcn_deploy(tag)
+      system "bcn deploy -e #{env.deploy_environment} --tag #{tag} --heritage-token #{env.heritage_token}"
     end
   end
 end
