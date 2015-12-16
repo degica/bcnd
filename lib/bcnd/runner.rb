@@ -51,7 +51,7 @@ module Bcnd
     end
 
     def bcn_deploy(env)
-      system "bcn deploy -e staging --tag #{env.commit} --heritage-token #{env.heritage_token}"
+      system "bcn deploy -e #{env.deploy_environment} --tag #{env.commit} --heritage-token #{env.heritage_token}"
     end
   end
 end

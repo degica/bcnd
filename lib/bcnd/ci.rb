@@ -47,5 +47,13 @@ module Bcnd
     def production_branch
       "production"
     end
+
+    def deploy_environment
+      # branch name => deploy environment name
+      {
+        staging_branch => "staging",
+        production_branch => "production"
+      }[self.branch]
+    end
   end
 end
