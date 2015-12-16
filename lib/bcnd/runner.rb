@@ -33,7 +33,7 @@ module Bcnd
         exit 1
       end
 
-      image_id = quay.docker_image_id_for_tag(repo: env.repository, tag: env.commit)
+      image_id = quay.docker_image_id_for_tag(repo: env.repository, tag: comp.base_commit)
       unless image_id
         puts "There is no docker image to be deployed"
         exit 1
