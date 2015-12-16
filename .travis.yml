@@ -1,0 +1,13 @@
+udo: false
+language: ruby
+cache:
+  - bundler
+rvm:
+  - 2.2.3
+script:
+  - bundle exec rake spec
+after_success:
+  - echo $PATH
+  - cp `which echo` /usr/local/bin/bcn
+  - bcn hello
+  - bundle exec rake bcnd:deploy
