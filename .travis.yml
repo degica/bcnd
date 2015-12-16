@@ -8,9 +8,8 @@ script:
   - bundle exec rake spec
 after_success:
   - pwd
-  - ls -l
-  - mkdir ./bin
-  - echo "echo $@" > ./bin/bcn
-  - chmod +x ./bin/bcn
+  - ls -l /home/travis
+  - echo "echo $@" > /home/travis/bin/bcn
+  - chmod +x /home/travis/bin/bcn
   - bcn hello
   - bundle exec rake bcnd:deploy
