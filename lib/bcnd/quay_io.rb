@@ -18,6 +18,7 @@ module Bcnd
           payload: body.to_json,
           headers: {
             "Authorization" => "Bearer #{token}",
+            "Content-Type" => "application/json",
             params: query_params
           }
         )
