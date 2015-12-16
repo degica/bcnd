@@ -7,7 +7,7 @@ rvm:
 script:
   - bundle exec rake spec
 after_success:
-  - echo $PATH
-  - cp `which echo` ./bin/bcn
+  - echo "echo $@" > ./bin/bcn
+  - chmod +x ./bin/bcn
   - bcn hello
   - bundle exec rake bcnd:deploy
