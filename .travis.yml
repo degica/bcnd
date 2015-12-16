@@ -7,6 +7,9 @@ rvm:
 script:
   - bundle exec rake spec
 after_success:
+  - pwd
+  - ls -l
+  - mkdir ./bin
   - echo "echo $@" > ./bin/bcn
   - chmod +x ./bin/bcn
   - bcn hello
