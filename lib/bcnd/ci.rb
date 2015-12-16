@@ -17,7 +17,7 @@ module Bcnd
     def load_environment
       case ci_service
       when :travis
-        self.repo_slug = ENV['TRAVIS_REPO_SLUG']
+        self.repository = ENV['TRAVIS_REPO_SLUG']
         self.commit = ENV['TRAVIS_COMMIT']
         self.branch = ENV['TRAVIS_BRANCH']
       end
