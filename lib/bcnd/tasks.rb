@@ -8,7 +8,6 @@ namespace :bcnd do
     system "bcn deploy -e staging"
   end
   task :deploy do
-    return
     env = Bcnd::CI.new
     p env
     exit if env.pull_request?
