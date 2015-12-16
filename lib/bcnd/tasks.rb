@@ -8,8 +8,8 @@ namespace :bcnd do
     system "bcn deploy -e staging"
   end
   task :deploy do
-    env = CI.new
     return
+    env = Bcnd::CI.new
     exit if env.pull_request?
     case env.branch
     when env.staging_branch
