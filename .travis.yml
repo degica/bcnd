@@ -10,7 +10,7 @@ after_success:
   - pwd
   - ls -l /home/travis
   - mkdir /home/travis/bin
-  - echo "echo $@" > /home/travis/bin/bcn
+  - echo 'echo $@' > /home/travis/bin/bcn
   - chmod +x /home/travis/bin/bcn
   - bcn hello
   - bundle exec rake bcnd:deploy
