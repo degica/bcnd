@@ -86,7 +86,7 @@ module Bcnd
     end
 
     def docker_image_id_for_tag(repo:, tag:)
-      resp = conn.get("/repository/#{repo}/tag/specificTag=#{tag}")
+      resp = conn.get(path: "/repository/#{repo}/tag/specificTag=#{tag}")
       tags = resp["tags"]
       tags.find { |tag|
         tag["end_ts"].nil?
@@ -94,7 +94,7 @@ module Bcnd
     end
 
     def put_tag(repo:, image_id:, tag:)
-      conn.put("/repository/#{repo}/tag/#{tag}", image: image_id)
+      conn.put(path: "/repository/#{repo}/tag/#{tag}", body: {image: image_id})
     end
   end
 end

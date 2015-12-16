@@ -3,6 +3,7 @@ module Bcnd
     attr_accessor :repository,
       :commit,
       :branch,
+      :quay_repository,
       :quay_token,
       :github_token,
       :heritage_token
@@ -12,6 +13,7 @@ module Bcnd
       self.quay_token = ENV['QUAY_TOKEN']
       self.github_token = ENV['GITHUB_TOKEN']
       self.heritage_token = ENV['HERITAGE_TOKEN']
+      self.quay.repository = ENV['QUAY_REPOSITORY'] || self.repository
     end
 
     def load_environment
