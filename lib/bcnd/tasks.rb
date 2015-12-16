@@ -10,6 +10,7 @@ namespace :bcnd do
   task :deploy do
     return
     env = Bcnd::CI.new
+    p env
     exit if env.pull_request?
     case env.branch
     when env.staging_branch
