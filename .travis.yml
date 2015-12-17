@@ -3,7 +3,6 @@ language: ruby
 cache:
   - bundler
 rvm:
-  - 2.0
   - 2.1
   - 2.2
 script:
@@ -11,4 +10,4 @@ script:
   - mkdir /home/travis/bin
   - echo 'echo $@' > /home/travis/bin/bcn
   - chmod +x /home/travis/bin/bcn
-  - bundle exec rake bcnd:deploy
+  - bundle exec bin/bcnd
