@@ -1,0 +1,4 @@
+#!/usr/bin/env ruby
+
+require 'bcnd'
+Bcnd::Runner.new.deploy

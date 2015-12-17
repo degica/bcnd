@@ -10,6 +10,8 @@ Gem::Specification.new do |s|
   s.license     = "MIT"
 
   s.files = Dir["lib/**/*", "README.md", "Rakefile"]
+  s.bindir = 'bin'
+  s.executables = ['bcnd']
   s.require_paths = ["lib"]
 
   s.add_dependency 'octokit'
