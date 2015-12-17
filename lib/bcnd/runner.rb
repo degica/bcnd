@@ -28,7 +28,7 @@ module Bcnd
       quay.wait_for_automated_build(repo: env.quay_repository, git_sha: env.commit)
       image_id = quay.docker_image_id_for_tag(repo: env.quay_repository, tag: 'latest')
       quay.put_tag(repo: env.quay_repository, image_id: image_id, tag: env.commit)
-      bcn_deploy(env.commit)
+      bcn_deploy(env.commit, env.mainline_heritage_token)
     end
 
     def deploy_stable
@@ -40,7 +40,7 @@ module Bcnd
         return
       end
 
-      bcn_deploy(tag)
+      bcn_deploy(tag, env.stable_heritage_token)
     end
 
     def quay
@@ -51,8 +51,8 @@ module Bcnd
       @github ||= Octokit::Client.new(access_token: env.github_token)
     end
 
-    def bcn_deploy(tag)
-      system "bcn deploy -e #{env.deploy_environment} --tag #{tag} --heritage-token #{env.heritage_token}"
+    def bcn_deploy(tag, token)
+      system "bcn deploy -e #{env.deploy_environment} --tag #{tag} --heritage-token #{token}"
     end
   end
 end
