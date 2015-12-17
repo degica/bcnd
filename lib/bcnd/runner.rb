@@ -8,12 +8,17 @@ module Bcnd
     end
 
     def deploy
-      return if env.pull_request?
+      if env.pull_request?
+        puts "Nothing to do for pull requests"
+        return
+      end
       case env.deploy_stage
       when :mainline
         deploy_mainline
       when :stable
         deploy_stable
+      else
+        puts "Can't recognize the current stage"
       end
     end
 
