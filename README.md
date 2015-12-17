@@ -68,6 +68,22 @@ Set the following environment variables to your CI build environment:
 - `QUAY_REPOSITORY`
   - A name of your quay repository. It should be `[organization]/[repo name]`. If you don't set this variable bcnd uses github repository name as a quay repository name.
 
+### Configurations
+
+You can customize mainline branch name, mainline environment(where mainline code is deployed), stable branch name, and stable environment with `barcelona.yml`
+
+```yaml
+# /barcelona.yml example
+---
+environments:
+  # your barcelona configurations. bcnd doesn't touch this.
+bcnd:
+  mainline_branch: dev # default: master
+  mainline_environment: dev # default: staging
+  stable_branch: master # default: production
+  stable_environment: master # default: production
+```
+
 ## How It Works
 
 ### Deploying to a staging environment
