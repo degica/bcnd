@@ -24,16 +24,18 @@ where your applications will be deployed
 ### GitHub
 
 bcnd only supports GitHub as a source code repository.
-Your GitHub repository must have 2 branches: `master` and `production`.
+Your GitHub repository must have 2 branches: mainline and stable
 bcnd doesn't offer a customizability for the branch names.
 
-#### `master` branch
+#### mainline branch
 
-master branch includes a latest stable application. bcnd uses master branch for staging environment.
+a mainline branch includes all reviewed commits. By default mainline branch is `master`.
+bcnd automatically deploys mainline branch to your mainline environment.
 
-#### `production` branch
+#### stable branch
 
-production branch is used for production environment. When you are ready to deploy your application to production environment, you need to merge the master branch into the production branch.
+a stable branch includes stable commits. By default stable branch is `production`.
+bcnd automatically deploys stable branch to your stable environment.
 
 ### Webhooks
 
@@ -63,23 +65,25 @@ Set the following environment variables to your CI build environment:
   - a github oauth token which has a permission to read your application's repository
 - `HERITAGE_TOKEN`
   - Barcelona's heritage token
+- `QUAY_REPOSITORY`
+  - A name of your quay repository. It should be `[organization]/[repo name]`. If you don't set this variable bcnd uses github repository name as a quay repository name.
 
 ## How It Works
 
 ### Deploying to a staging environment
 
-When a commit is pushed into a master branch, bcnd deploys your application to barcelona's staging environment.
+When a commit is pushed into a mainline branch, bcnd deploys your application to barcelona's mainline environment.
 Here's what bcnd actually does:
 
 - Wait for quay.io automated build to be finished
 - Attach a docker image tag to the `latest` docker image.
-  - The tag is the latest `master` branch's commit hash
+  - The tag is the latest mainline branch's commit hash
 - Call Barcelona deploy API with the tag name
-  - `bcn deploy -e staging --tag [git_commit_hash]`
+  - `bcn deploy -e [mainline env] --tag [git_commit_hash]`
 
 ### Deploying to a production environment
 
-When a commit is pushed into a production branch, bcnd deploys your application to barcelona's production environment
+When a commit is pushed into a stable branch, bcnd deploys your application to barcelona's stable environment
 Here's what bcnd actually does:
 
 - Compare `master` and `production` branch
@@ -87,5 +91,5 @@ Here's what bcnd actually does:
 - Get master branch's latest commit hash
 - Find a docker image from quay.io with the tag of the master commit hash
 - Call Barcelona deploy API with the tag name
-  - `bcn deploy -e production --tag [git_commit_hash]`
+  - `bcn deploy -e [stable env] --tag [git_commit_hash]`
  

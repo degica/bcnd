@@ -8,36 +8,35 @@ module Bcnd
     end
 
     def deploy
-      exit if env.pull_request?
-      case env.branch
-      when env.staging_branch
-        deploy_staging
-      when env.production_branch
-        deploy_production
+      return if env.pull_request?
+      case env.deploy_stage
+      when :mainline
+        deploy_mainline
+      when :stable
+        deploy_stable
       end
     end
 
     private
 
-    def deploy_staging
-      quay.wait_for_automated_build(repo: env.repository, git_sha: env.commit)
-      image_id = quay.docker_image_id_for_tag(repo: env.repository, tag: 'latest')
-      quay.put_tag(repo: env.repository, image_id: image_id, tag: env.commit)
+    def deploy_mainline
+      quay.wait_for_automated_build(repo: env.quay_repository, git_sha: env.commit)
+      image_id = quay.docker_image_id_for_tag(repo: env.quay_repository, tag: 'latest')
+      quay.put_tag(repo: env.quay_repository, image_id: image_id, tag: env.commit)
       bcn_deploy(env.commit)
     end
 
-    def deploy_production
+    def deploy_stable
       comp = github.compare(env.repository, 'master', 'production')
       unless comp.files.empty?
-        puts "master and production are not same"
-        exit 1
+        raise "master and production are not same"
       end
 
       tag = comp.base_commit.sha
-      image_id = quay.docker_image_id_for_tag(repo: env.repository, tag: tag)
+      image_id = quay.docker_image_id_for_tag(repo: env.quay_repository, tag: tag)
       unless image_id
-        puts "There is no docker image to be deployed"
-        exit 1
+        raise "There is no docker image to be deployed"
+        return
       end
 
       bcn_deploy(tag)

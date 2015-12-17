@@ -1,0 +1,6 @@
+# This file is used only for tests
+bcnd:
+  mainline_branch: master
+  mainline_environment: staging
+  stable_branch: production
+  stable_environment: production

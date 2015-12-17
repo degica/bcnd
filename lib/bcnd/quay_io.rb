@@ -15,7 +15,7 @@ module Bcnd
         response = RestClient::Request.execute(
           method: method,
           url: "#{BASE_URL}#{path}",
-          payload: body.to_json,
+          payload: body.empty? ? nil : body.to_json,
           headers: {
             "Authorization" => "Bearer #{token}",
             "Content-Type" => "application/json",
