@@ -1,8 +1,14 @@
 $LOAD_PATH.unshift File.expand_path("../lib", __FILE__)
 
 Gem::Specification.new do |s|
-  s.name = "bcnd"
-  s.version = "0.0.1"
+  s.name        = "bcnd"
+  s.version     = "0.0.1"
+  s.authors     = ['Kazunori Kajihiro']
+  s.summary     = "Deploy your application"
+  s.description = "Deploy your application"
+  s.homepage    = "https://github.com/degica/bcnd"
+  s.license     = "MIT"
+
   s.files = Dir["lib/**/*", "README.md", "Rakefile"]
   s.require_paths = ["lib"]
 
