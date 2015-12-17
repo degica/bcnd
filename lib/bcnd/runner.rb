@@ -52,7 +52,7 @@ module Bcnd
     end
 
     def bcn_deploy(tag, token)
-      system "bcn deploy -e #{env.deploy_environment} --tag #{tag} --heritage-token #{token}"
+      system "bcn deploy -e #{env.deploy_environment} --tag #{tag} --heritage-token #{token} 1> /dev/null"
     end
   end
 end
