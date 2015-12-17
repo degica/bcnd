@@ -3,10 +3,11 @@ language: ruby
 cache:
   - bundler
 rvm:
-  - 2.2.3
+  - 2.0
+  - 2.1
+  - 2.2
 script:
   - bundle exec rake spec
-after_success:
   - mkdir /home/travis/bin
   - echo 'echo $@' > /home/travis/bin/bcn
   - chmod +x /home/travis/bin/bcn
