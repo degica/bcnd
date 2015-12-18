@@ -35,10 +35,7 @@ module Bcnd
       comp = github.compare(env.repository, env.mainline_branch, env.stable_branch)
       tag = comp.merge_base_commit.sha
       image_id = quay.docker_image_id_for_tag(repo: env.quay_repository, tag: tag)
-      unless image_id
-        raise "There is no docker image to be deployed"
-        return
-      end
+      raise "There is no docker image to be deployed" unless image_id
 
       bcn_deploy(tag, env.stable_heritage_token)
     end
