@@ -76,6 +76,9 @@ Set the following environment variables to your CI build environment:
 - `GITHUB_TOKEN`
   - **Required**
   - a github oauth token which has a permission to read your application's repository
+- `BARCELONA_ENDPOINT`
+  - **Required**
+  - A URL of Barcelona service e.g. `https://barcelona.your-domain.com`
 - `MAINLINE_HERITAGE_TOKEN`
   - **Required**
   - Barcelona's heritage token for the mainline application
