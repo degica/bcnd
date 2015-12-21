@@ -9,7 +9,6 @@ module Bcnd
 
     def deploy
       if env.pull_request?
-        puts "Nothing to do for pull requests"
         return
       end
       case env.deploy_stage
@@ -26,7 +25,7 @@ module Bcnd
 
     def deploy_mainline
       quay.wait_for_automated_build(repo: env.quay_repository, git_sha: env.commit)
-      image_id = quay.docker_image_id_for_tag(repo: env.quay_repository, tag: 'latest')
+      image_id = quay.docker_image_id_for_tag(repo: env.quay_repository, tag: 'latest') # FIXME
       quay.put_tag(repo: env.quay_repository, image_id: image_id, tag: env.commit)
       bcn_deploy(env.commit, env.mainline_heritage_token)
     end
@@ -50,6 +49,9 @@ module Bcnd
 
     def bcn_deploy(tag, token)
       system "bcn deploy -e #{env.deploy_environment} --tag #{tag} --heritage-token #{token} 1> /dev/null"
+      if $?.exitstatus != 0
+        raise "bcn returned non-zero exitcode #{$?.exitstatus}"
+      end
     end
   end
 end

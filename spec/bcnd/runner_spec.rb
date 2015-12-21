@@ -49,7 +49,9 @@ describe Bcnd::Runner do
         .with(body: {image: "bbbbbb"}.to_json)
 
         runner = described_class.new
-        expect(runner).to receive(:system).with("bcn deploy -e staging --tag aaaaaa --heritage-token mainline_heritage_token 1> /dev/null")
+        expect(runner).to receive(:system).with("bcn deploy -e staging --tag aaaaaa --heritage-token mainline_heritage_token 1> /dev/null") do
+          system 'true'
+        end
 
         expect{runner.deploy}.to_not raise_error
         expect(stub1).to have_been_requested
@@ -85,7 +87,9 @@ describe Bcnd::Runner do
         )
 
         runner = described_class.new
-        expect(runner).to receive(:system).with("bcn deploy -e production --tag aaaaaa --heritage-token stable_heritage_token 1> /dev/null")
+        expect(runner).to receive(:system).with("bcn deploy -e production --tag aaaaaa --heritage-token stable_heritage_token 1> /dev/null") do
+          system 'true'
+        end
         expect{runner.deploy}.to_not raise_error
       end
     end
