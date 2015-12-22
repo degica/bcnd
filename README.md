@@ -74,7 +74,7 @@ Set the following environment variables to your CI build environment:
   - **Required**
   - a quay.io oauth token. you can create a new oauth token at quay.io organization page -> OAuth Applications -> Create New Application -> Generate Token
 - `GITHUB_TOKEN`
-  - **Required**
+  - **Conditional** If you have stable branch this is required.
   - a github oauth token which has a permission to read your application's repository
 - `BARCELONA_ENDPOINT`
   - **Required**
