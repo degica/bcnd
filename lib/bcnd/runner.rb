@@ -8,9 +8,8 @@ module Bcnd
     end
 
     def deploy
-      if env.pull_request?
-        return
-      end
+      return if env.pull_request?
+
       case env.deploy_stage
       when :mainline
         deploy_mainline
