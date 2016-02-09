@@ -26,6 +26,7 @@ module Bcnd
       quay.wait_for_automated_build(repo: env.quay_repository, git_sha: env.commit)
       image_id = quay.docker_image_id_for_tag(repo: env.quay_repository, tag: 'latest') # FIXME
       quay.put_tag(repo: env.quay_repository, image_id: image_id, tag: env.commit)
+      puts "attached tag #{env.commit} to image #{image_id}"
       bcn_deploy(env.commit, env.mainline_heritage_token)
     end
 
@@ -48,6 +49,7 @@ module Bcnd
 
     def bcn_deploy(tag, token)
       system "bcn deploy -e #{env.deploy_environment} --tag #{tag} --heritage-token #{token} 1> /dev/null"
+      puts "deploy triggered with tag #{tag} to #{env.deploy_environment} environment"
       if $?.exitstatus != 0
         raise "bcn returned non-zero exitcode #{$?.exitstatus}"
       end
