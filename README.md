@@ -125,3 +125,7 @@ Here's what bcnd actually does:
 - Call Barcelona deploy API with the tag name
   - `bcn deploy -e [stable env] --tag [git_commit_hash]`
  
+
+## LICENSE
+
+MIT
