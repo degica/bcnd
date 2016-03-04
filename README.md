@@ -44,8 +44,6 @@ bcnd automatically deploys stable branch to your stable environment.
 
 ## Usage
 
-### `bcnd:deploy` rake task
-
 Setup your CI configuration as follows:
 
 - Install barcelona client
@@ -55,15 +53,12 @@ Setup your CI configuration as follows:
 Here's the example for travis CI
 
 ```yml
-before_script
+before_script:
 - npm install -g barcelona
-- gem install specific_install
-- gem specific_install https://github.com/degica/bcnd.git
-
-# ...
-
-after_success:
-  - bcnd
+- gem install bcnd
+script:
+- bundle excec rspec
+- bcnd
 ```
 
 ### Environment variables
