@@ -5,6 +5,7 @@ cache:
 rvm:
   - 2.1
   - 2.2
+  - 2.3.0
 script:
   - bundle exec rake spec
   - mkdir /home/travis/bin
