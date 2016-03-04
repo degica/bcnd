@@ -2,10 +2,12 @@ $LOAD_PATH.unshift File.expand_path("../lib", __FILE__)
 
 Gem::Specification.new do |s|
   s.name        = "bcnd"
-  s.version     = "0.0.1"
+  s.version     = "0.1.0"
   s.authors     = ['Kazunori Kajihiro']
-  s.summary     = "Deploy your application"
-  s.description = "Deploy your application"
+  s.email       = ["kkajihiro@degica.com"]
+
+  s.summary     = "Degica's opinionated deployment tool"
+  s.description = "Degica's opinionated deployment tool."
   s.homepage    = "https://github.com/degica/bcnd"
   s.license     = "MIT"
 
@@ -14,10 +16,8 @@ Gem::Specification.new do |s|
   s.executables = ['bcnd']
   s.require_paths = ["lib"]
 
-  s.add_dependency 'octokit'
-  s.add_dependency 'rest-client'
-  s.add_dependency 'activesupport'
-  s.add_dependency 'rake'
-  s.add_development_dependency "rspec"
-  s.add_development_dependency "webmock"
+  s.add_dependency 'octokit', '~> 4.2'
+  s.add_dependency 'rest-client', '~> 1.8'
+  s.add_development_dependency "rspec", '~> 3.2'
+  s.add_development_dependency "webmock", '~> 1.22'
 end

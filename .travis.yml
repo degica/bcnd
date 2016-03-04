@@ -5,8 +5,9 @@ cache:
 rvm:
   - 2.1
   - 2.2
+  - 2.3.0
 script:
-  - bundle exec rake spec
+  - bundle exec rspec
   - mkdir /home/travis/bin
   - echo 'echo $@' > /home/travis/bin/bcn
   - chmod +x /home/travis/bin/bcn
