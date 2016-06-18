@@ -27,7 +27,7 @@ module Bcnd
       image_id = quay.docker_image_id_for_tag(repo: env.quay_repository, tag: 'latest') # FIXME
       quay.put_tag(repo: env.quay_repository, image_id: image_id, tag: env.commit)
       puts "attached tag #{env.commit} to image #{image_id}"
-      bcn_deploy(env.commit, env.mainline_heritage_token)
+      bcn_deploy(env.commit, env.mainline_app_token)
     end
 
     def deploy_stable
@@ -36,7 +36,7 @@ module Bcnd
       image_id = quay.docker_image_id_for_tag(repo: env.quay_repository, tag: tag)
       raise "There is no docker image to be deployed" unless image_id
 
-      bcn_deploy(tag, env.stable_heritage_token)
+      bcn_deploy(tag, env.stable_app_token)
     end
 
     def quay
@@ -48,7 +48,7 @@ module Bcnd
     end
 
     def bcn_deploy(tag, token)
-      system "bcn deploy -e #{env.deploy_environment} --tag #{tag} --heritage-token #{token} 1> /dev/null"
+      system "bcn deploy -e #{env.deploy_environment} --tag #{tag} --app-token #{token} 1> /dev/null"
       puts "deploy triggered with tag #{tag} to #{env.deploy_environment} environment"
       if $?.exitstatus != 0
         raise "bcn returned non-zero exitcode #{$?.exitstatus}"

@@ -9,22 +9,22 @@ module Bcnd
     }
 
     attr_accessor :repository,
-      :commit,
-      :branch,
-      :quay_repository,
-      :quay_token,
-      :github_token,
-      :mainline_heritage_token,
-      :stable_heritage_token,
-      :stage_config
+                  :commit,
+                  :branch,
+                  :quay_repository,
+                  :quay_token,
+                  :github_token,
+                  :mainline_app_token,
+                  :stable_app_token,
+                  :stage_config
 
     def initialize
       load_ci_environment
       load_stage_config
       self.quay_token = ENV['QUAY_TOKEN']
       self.github_token = ENV['GITHUB_TOKEN']
-      self.mainline_heritage_token = ENV['MAINLINE_HERITAGE_TOKEN']
-      self.stable_heritage_token = ENV['STABLE_HERITAGE_TOKEN']
+      self.mainline_app_token = ENV['MAINLINE_APP_TOKEN'] || ENV['MAINLINE_HERITAGE_TOKEN']
+      self.stable_app_token = ENV['STABLE_APP_TOKEN'] || ENV['STABLE_HERITAGE_TOKEN']
       self.quay_repository = ENV['QUAY_REPOSITORY'] || self.repository
     end
 
