@@ -49,7 +49,7 @@ module Bcnd
     end
 
     def automated_builds_for(repo:, git_sha:)
-      builds = conn.get(path: "/repository/#{repo}/build/")["builds"]
+      builds = conn.get(path: "/repository/#{repo}/build/?limit=20")["builds"]
       builds.select do |b|
         b["trigger_metadata"]["commit"] == git_sha.downcase
       end
