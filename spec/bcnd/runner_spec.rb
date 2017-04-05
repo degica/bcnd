@@ -20,7 +20,7 @@ describe Bcnd::Runner do
       end
 
       it "wait for quay build to be finished" do
-        stub1 = stub_request(:get, "https://quay.io/api/v1/repository/org/repo/build/").to_return(
+        stub1 = stub_request(:get, "https://quay.io/api/v1/repository/org/repo/build/?limit=20").to_return(
           body: {
             builds: [
               {
