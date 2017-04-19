@@ -5,8 +5,8 @@ describe Bcnd::Runner do
   before do
     ENV["TRAVIS"] = "true"
     ENV["GITHUB_TOKEN"] = "github_token"
-    ENV["MAINLINE_HERITAGE_TOKEN"] = "mainline_heritage_token"
-    ENV["STABLE_HERITAGE_TOKEN"] = "stable_heritage_token"
+    ENV["MAINLINE_APP_TOKEN"] = "mainline_app_token"
+    ENV["STABLE_APP_TOKEN"] = "stable_app_token"
     ENV["QUAY_TOKEN"] = "quay_token"
     ENV["TRAVIS_COMMIT"] = "aaaaaa"
     ENV["TRAVIS_REPO_SLUG"] = "org/repo"
@@ -49,7 +49,7 @@ describe Bcnd::Runner do
         .with(body: {image: "bbbbbb"}.to_json)
 
         runner = described_class.new
-        expect(runner).to receive(:system).with("bcn deploy -e staging --tag aaaaaa --heritage-token mainline_heritage_token 1> /dev/null") do
+        expect(runner).to receive(:system).with("bcn deploy -e staging --tag aaaaaa --app-token mainline_app_token 1> /dev/null") do
           system 'true'
         end
 
@@ -87,7 +87,7 @@ describe Bcnd::Runner do
         )
 
         runner = described_class.new
-        expect(runner).to receive(:system).with("bcn deploy -e production --tag aaaaaa --heritage-token stable_heritage_token 1> /dev/null") do
+        expect(runner).to receive(:system).with("bcn deploy -e production --tag aaaaaa --app-token stable_app_token 1> /dev/null") do
           system 'true'
         end
         expect{runner.deploy}.to_not raise_error

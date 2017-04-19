@@ -74,12 +74,12 @@ Set the following environment variables to your CI build environment:
 - `BARCELONA_ENDPOINT`
   - **Required**
   - A URL of Barcelona service e.g. `https://barcelona.your-domain.com`
-- `MAINLINE_HERITAGE_TOKEN`
+- `MAINLINE_APP_TOKEN`
   - **Required**
-  - Barcelona's heritage token for the mainline application
-- `STABLE_HERITAGE_TOKEN`
+  - Barcelona's app token for the mainline application
+- `STABLE_APP_TOKEN`
   - **Conditional** If you have stable branch this is required.
-  - Barcelona's heritage token for the stable application
+  - Barcelona's app token for the stable application
 - `QUAY_REPOSITORY`
   - **Optional**
   - A name of your quay repository. It should be `[organization]/[repo name]`. If you don't set this variable bcnd uses github repository name as a quay repository name.
