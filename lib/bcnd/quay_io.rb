@@ -96,7 +96,7 @@ module Bcnd
       tags = resp["tags"]
       tags.find { |tag|
         tag["end_ts"].nil?
-      }["docker_image_id"]
+      }&.dig("docker_image_id")
     end
 
     def put_tag(repo:, image_id:, tag:)
