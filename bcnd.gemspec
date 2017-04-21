@@ -18,6 +18,6 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'octokit', '~> 4.2'
   s.add_dependency 'rest-client', '~> 1.8'
-  s.add_development_dependency "rspec", '~> 3.2'
-  s.add_development_dependency "webmock", '~> 1.22'
+  s.add_development_dependency "rspec"
+  s.add_development_dependency "webmock"
 end
