@@ -20,7 +20,14 @@ describe Bcnd::Runner do
       end
 
       it "wait for quay build to be finished" do
-        stub1 = stub_request(:get, "https://quay.io/api/v1/repository/org/repo/build/?limit=20").to_return(
+        stub1 = stub_request(:get,  "https://quay.io/api/v1/repository/org/repo/tag/")
+                  .with(query: hash_including("specificTag" => "aaaaaa"))
+                  .to_return(
+                    body: {
+                      tags: []
+                    }.to_json
+                  )
+        stub2 = stub_request(:get, "https://quay.io/api/v1/repository/org/repo/build/?limit=20").to_return(
           body: {
             builds: [
               {
@@ -32,7 +39,7 @@ describe Bcnd::Runner do
             ]
           }.to_json
         )
-        stub2 = stub_request(:get,  "https://quay.io/api/v1/repository/org/repo/tag/")
+        stub3 = stub_request(:get,  "https://quay.io/api/v1/repository/org/repo/tag/")
         .with(query: hash_including("specificTag" => "latest"))
         .to_return(
           body: {
@@ -45,7 +52,7 @@ describe Bcnd::Runner do
           }.to_json
         )
 
-        stub3 = stub_request(:put,   "https://quay.io/api/v1/repository/org/repo/tag/aaaaaa")
+        stub4 = stub_request(:put,   "https://quay.io/api/v1/repository/org/repo/tag/aaaaaa")
         .with(body: {image: "bbbbbb"}.to_json)
 
         runner = described_class.new
@@ -57,6 +64,7 @@ describe Bcnd::Runner do
         expect(stub1).to have_been_requested
         expect(stub2).to have_been_requested
         expect(stub3).to have_been_requested
+        expect(stub4).to have_been_requested
       end
     end
 
