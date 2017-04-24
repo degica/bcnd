@@ -20,7 +20,14 @@ describe Bcnd::Runner do
       end
 
       it "wait for quay build to be finished" do
-        stub1 = stub_request(:get, "https://quay.io/api/v1/repository/org/repo/build/?limit=20").to_return(
+        stub1 = stub_request(:get,  "https://quay.io/api/v1/repository/org/repo/tag/")
+                  .with(query: hash_including("specificTag" => "aaaaaa"))
+                  .to_return(
+                    body: {
+                      tags: []
+                    }.to_json
+                  )
+        stub2 = stub_request(:get, "https://quay.io/api/v1/repository/org/repo/build/?limit=20").to_return(
           body: {
             builds: [
               {
@@ -32,7 +39,7 @@ describe Bcnd::Runner do
             ]
           }.to_json
         )
-        stub2 = stub_request(:get,  "https://quay.io/api/v1/repository/org/repo/tag/")
+        stub3 = stub_request(:get,  "https://quay.io/api/v1/repository/org/repo/tag/")
         .with(query: hash_including("specificTag" => "latest"))
         .to_return(
           body: {
@@ -45,7 +52,7 @@ describe Bcnd::Runner do
           }.to_json
         )
 
-        stub3 = stub_request(:put,   "https://quay.io/api/v1/repository/org/repo/tag/aaaaaa")
+        stub4 = stub_request(:put,   "https://quay.io/api/v1/repository/org/repo/tag/aaaaaa")
         .with(body: {image: "bbbbbb"}.to_json)
 
         runner = described_class.new
@@ -57,6 +64,34 @@ describe Bcnd::Runner do
         expect(stub1).to have_been_requested
         expect(stub2).to have_been_requested
         expect(stub3).to have_been_requested
+        expect(stub4).to have_been_requested
+      end
+
+      context "when the tag already exists" do
+        it "skips tagging" do
+          stub = stub_request(:get,  "https://quay.io/api/v1/repository/org/repo/tag/")
+                   .with(query: hash_including("specificTag" => "aaaaaa"))
+                   .to_return(
+                     body: {
+                       tags: [
+                         {
+                           "reversion" => false,
+                           "manifest_digest" => "sha256:97b6de52ce9d9d89766144e0a9a0fe4a151741ecd812884ce804f41bdb672419",
+                           "start_ts" => 1492592525,
+                           "name" => "aaaaaa",
+                           "docker_image_id" => "aacf174aa6cf1a9de0efb5e6164cbc2556965fa469e94725c0de596e1e01a2d1"
+                         },
+                       ]
+                     }.to_json
+                   )
+
+          runner = described_class.new
+          expect(runner).to receive(:system).with("bcn deploy -e staging --tag aaaaaa --heritage-token mainline_heritage_token 1> /dev/null") do
+            system 'true'
+          end
+          expect{runner.deploy}.to_not raise_error
+          expect(stub).to have_been_requested
+        end
       end
     end
 

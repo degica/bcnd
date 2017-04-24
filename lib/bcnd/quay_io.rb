@@ -93,10 +93,8 @@ module Bcnd
           "specificTag" => tag
         }
       )
-      tags = resp["tags"]
-      tags.find { |tag|
-        tag["end_ts"].nil?
-      }["docker_image_id"]
+      tag = resp["tags"].find { |tag| tag["end_ts"].nil? }
+      tag.nil? ? nil : tag["docker_image_id"]
     end
 
     def put_tag(repo:, image_id:, tag:)

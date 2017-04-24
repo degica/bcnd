@@ -23,10 +23,18 @@ module Bcnd
     private
 
     def deploy_mainline
-      quay.wait_for_automated_build(repo: env.quay_repository, git_sha: env.commit)
-      image_id = quay.docker_image_id_for_tag(repo: env.quay_repository, tag: 'latest') # FIXME
-      quay.put_tag(repo: env.quay_repository, image_id: image_id, tag: env.commit)
-      puts "attached tag #{env.commit} to image #{image_id}"
+      image_id = quay.docker_image_id_for_tag(repo: env.quay_repository, tag: env.commit)
+      if image_id
+        # Skip if docker tag for the commit already exists
+        # This typically happens when a CI build is manually restarted
+        puts "Found the tagged image #{env.commit}"
+      else
+        quay.wait_for_automated_build(repo: env.quay_repository, git_sha: env.commit)
+        image_id = quay.docker_image_id_for_tag(repo: env.quay_repository, tag: 'latest') # FIXME
+        quay.put_tag(repo: env.quay_repository, image_id: image_id, tag: env.commit)
+        puts "attached tag #{env.commit} to image #{image_id}"
+      end
+
       bcn_deploy(env.commit, env.mainline_heritage_token)
     end
 
