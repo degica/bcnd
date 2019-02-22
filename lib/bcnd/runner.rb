@@ -8,7 +8,10 @@ module Bcnd
     end
 
     def deploy
-      return if env.pull_request?
+      if env.pull_request?
+        puts "Nothing to do for a pull request. Exiting."
+        return
+      end
 
       case env.deploy_stage
       when :mainline
@@ -56,7 +59,10 @@ module Bcnd
     end
 
     def bcn_deploy(tag, token)
-      system "bcn deploy -e #{env.deploy_environment} --tag #{tag} --heritage-token #{token} 1> /dev/null"
+      unless ENV['DRY_RUN']
+        system "bcn deploy -e #{env.deploy_environment} --tag #{tag} --heritage-token #{token} 1> /dev/null"
+      end
+
       puts "deploy triggered with tag #{tag} to #{env.deploy_environment} environment"
       if $?.exitstatus != 0
         raise "bcn returned non-zero exitcode #{$?.exitstatus}"

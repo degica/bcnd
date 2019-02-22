@@ -99,6 +99,7 @@ module Bcnd
     end
 
     def put_tag(repo:, image_id:, tag:)
+      return if ENV["DRY_RUN"]
       conn.put(
         path: "/repository/#{repo}/tag/#{tag}",
         body: {
