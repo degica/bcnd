@@ -81,6 +81,7 @@ module Bcnd
           return
         when :building
           print '.'
+          $stdout.flush
           sleep 5
         end
       end
