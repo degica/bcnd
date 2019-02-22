@@ -132,6 +132,7 @@ describe Bcnd::Runner do
 
   describe "GitLab CI" do
     before do
+      stub_env("TRAVIS", nil)
       stub_env("GITLAB_CI", "true")
       stub_env("GITHUB_TOKEN", "github_token")
       stub_env("MAINLINE_HERITAGE_TOKEN", "mainline_heritage_token")
