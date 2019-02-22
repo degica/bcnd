@@ -30,7 +30,7 @@ module Bcnd
         puts "Found the tagged image #{env.commit}"
       else
         quay.wait_for_automated_build(repo: env.quay_repository, git_sha: env.commit)
-        image_id = quay.docker_image_id_for_tag(repo: env.quay_repository, tag: 'latest') # FIXME
+        image_id = quay.docker_image_id_for_tag(repo: env.quay_repository, tag: env.branch)
         quay.put_tag(repo: env.quay_repository, image_id: image_id, tag: env.commit)
         puts "attached tag #{env.commit} to image #{image_id}"
       end
