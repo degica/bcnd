@@ -9,7 +9,7 @@ rvm:
   - 2.6
 script:
   - bundle exec rspec
-  - mkdir /home/travis/bin
+  - mkdir -p /home/travis/bin
   - echo 'echo $@' > /home/travis/bin/bcn
   - chmod +x /home/travis/bin/bcn
   - bundle exec bin/bcnd
