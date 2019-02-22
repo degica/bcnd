@@ -32,12 +32,16 @@ module Bcnd
       case ci_service
       when :travis
         ENV['TRAVIS_PULL_REQUEST'] != 'false'
+      when :gitlab_ci
+        !!ENV['CI_MERGE_REQUEST_ID']
       end
     end
 
     def ci_service
       if ENV['TRAVIS']
         :travis
+      elsif ENV['GITLAB_CI']
+        :gitlab_ci
       else
         :unknown
       end
@@ -70,6 +74,10 @@ module Bcnd
         self.repository = ENV['TRAVIS_REPO_SLUG']
         self.commit     = ENV['TRAVIS_COMMIT']
         self.branch     = ENV['TRAVIS_BRANCH']
+      when :gitlab_ci
+        self.repository = ENV['CI_PROJECT_PATH']
+        self.commit     = ENV['CI_COMMIT_SHA']
+        self.branch     = ENV['CI_COMMIT_REF_NAME']
       end
     end
 
