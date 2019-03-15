@@ -81,6 +81,7 @@ module Bcnd
           return
         when :building
           print '.'
+          $stdout.flush
           sleep 5
         end
       end
@@ -98,6 +99,7 @@ module Bcnd
     end
 
     def put_tag(repo:, image_id:, tag:)
+      return if ENV["DRY_RUN"]
       conn.put(
         path: "/repository/#{repo}/tag/#{tag}",
         body: {

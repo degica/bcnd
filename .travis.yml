@@ -3,12 +3,13 @@ language: ruby
 cache:
   - bundler
 rvm:
-  - 2.2
-  - 2.3.4
-  - 2.4.1
+  - 2.3
+  - 2.4
+  - 2.5
+  - 2.6
 script:
   - bundle exec rspec
-  - mkdir /home/travis/bin
+  - mkdir -p /home/travis/bin
   - echo 'echo $@' > /home/travis/bin/bcn
   - chmod +x /home/travis/bin/bcn
   - bundle exec bin/bcnd
