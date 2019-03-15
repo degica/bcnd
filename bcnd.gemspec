@@ -2,7 +2,7 @@ $LOAD_PATH.unshift File.expand_path("../lib", __FILE__)
 
 Gem::Specification.new do |s|
   s.name        = "bcnd"
-  s.version     = "0.3.0"
+  s.version     = "0.4.0"
   s.authors     = ['Kazunori Kajihiro']
   s.email       = ["kkajihiro@degica.com"]
 
